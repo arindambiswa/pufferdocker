@@ -1,9 +1,16 @@
-# A Script to auto install Pufferpanel 
+apt install software-properties-common
+apt-add-repository universe
+## Because people may have trouble installing the php-fpm. But this work around worked for my install.
 
-curl -s https://packagecloud.io/install/repositories/pufferpanel/pufferpanel/script.deb.sh | sudo bash
-sudo apt-get install pufferpanel
-sudo systemctl enable pufferpanel
-sudo pufferpanel user add --email foxytoux@gmail.com --name foxytoux --password Fox21200 --admin
-sudo systemctl enable --now pufferpanel
+apt install -y openssl curl nginx mysql-client mysql-server php-fpm php-cli php-curl php-mysql
 
-# I uses https://docs.pufferpanel.com/en/2.x/installing.html to make this easy script, please look over there is there is any problem
+## Make sure to set the MySQL root password when running this
+mysql_secure_installation
+
+# Please run these with either sudo in front of them, or as the root user (sudo -i)
+mkdir -p /srv && cd /srv
+curl -L -o pufferpanel.tar.gz https://git.io/fNZYg
+tar -xf pufferpanel.tar.gz
+cd pufferpanel 
+chmod +x pufferpanel
+./pufferpanel install
